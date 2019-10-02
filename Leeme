@@ -1,0 +1,43 @@
+#1 Crear un formularios dinamico
+  a) al momento de que cargue la pagina, mantener el formulario datos_basicos  por default 
+  b) crear los campos de el formulario dependiendo de un json datos.json
+  c) seran 3 formularios , datos_basicos, datos_almacen , datos_foto
+
+
+  1) datos_basicos 
+    a)  validar los campos dependiendo del tipo, y los required como obligatorios y su maxlength,  cargar los campos select
+    con sus respectivas data en json.
+    
+    b)  al momento de seleccionar el "tipo de producto" se carga la "marca" y el "modelo" dependiendo del tipo q se selecciono , si el "tipo de producto"
+    no posee "marca" o "medelo" no sera obligatorio, de lo contrario si lo es.
+
+    c) usar los select de bootstrap que poseen buscador 
+
+    d) que no se permita pasar al siguiente tab si no completo todos los datos
+
+    e) avisar de alguna manera la vailidacion requeridad de cada campo , osea q el usuario pueda entender
+
+  2) datos_almacen
+    a) una ves q se completo el formulario datos_basicos tener la opcion de que se pueda regresar  al formulario datos_basicos
+
+    b) en el formulario datos_almacen, se alamcenara los diferentes tipos de colores , tamaños y el valor de cada uno y la cantidad q se posee,
+    "esta parte si no la entiendes me avisas, para explicarte por llamada"
+
+  3) datos_foto
+    agregar una imagen al producto , al momento de subir la imagen se tiene q ver una miniatura de la misma 
+
+
+#2 al completar el formulario 
+  a) almacenar todo la data en json , bien estrucurado 
+  b) que se "reinicie" el formulario de tal manera q puedas agregar otro registro , como agregaste el primero
+  c) al finalizar cada registro indicarle al usuario     
+
+#3 en el Json donde se almacenara cada registro guardado , una vez q tenga almenos 1 registro
+  a) que aparezca un boton , que al hacerle click se abra un modal don de se muestre una lista con algunos datos basicos de cada registro , y su imagen miniatura
+  b) que se pueda eliminar y editar los regitros creados 
+
+
+
+  TODO ESTO HACERLO CON UNA ESTRUCTURA DE DISEÑO AMIGABLE PARA EL USUARIO , QUE SE VEA BONITO 
+  SE EVALUARA TAMBN EL DISEÑO xD
+

@@ -1,0 +1,43 @@
+{
+  "marca": [{
+    "id": "1",
+    "id_tipo": "1",
+    "name": "Nike"
+  }, {
+    "id": "2",
+    "id_tipo": "1",
+    "name": "Jordan"
+  }, {
+    "id": "3",
+    "id_tipo": "1",
+    "name": "Alden"
+  }, {
+    "id": "4",
+    "id_tipo": "1",
+    "name": "Corthay"
+  }, {
+    "id": "5",
+    "id_tipo": "1",
+    "name": "Edward Green"
+  }, {
+    "id": "6",
+    "id_tipo": "2",
+    "name": "Samsung"
+  }, {
+    "id": "7",
+    "id_tipo": "2",
+    "name": "Motorola"
+  }, {
+    "id": "8",
+    "id_tipo": "2",
+    "name": "Sony"
+  }, {
+    "id": "9",
+    "id_tipo": "2",
+    "name": "Huawei"
+  }, {
+    "id": "10",
+    "id_tipo": "2",
+    "name": "Lenovo"
+  }]
+}

@@ -1,0 +1,23 @@
+{
+  "modelo": [{
+    "id": "1",
+    "id_tipo": "1",
+    "name": "Botas pascualas"
+  }, {
+    "id": "2",
+    "id_tipo": "1",
+    "name": "Lita Boots"
+  }, {
+    "id": "3",
+    "id_tipo": "1",
+    "name": "Sneakers"
+  }, {
+    "id": "4",
+    "id_tipo": "1",
+    "name": "Slippers"
+  }, {
+    "id": "5",
+    "id_tipo": "1",
+    "name": "Pumps"
+  }]
+}

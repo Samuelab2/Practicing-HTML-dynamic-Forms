@@ -1,0 +1,9 @@
+{
+  "tipo_producto": [{
+    "id": "1",
+    "name": "Zapatos"
+  }, {
+    "id": "2",
+    "name": "Celulares"
+  }]
+}

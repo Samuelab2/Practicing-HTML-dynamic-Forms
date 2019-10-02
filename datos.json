@@ -1,0 +1,72 @@
+{
+  "datos_basicos": [{
+    "name": "Nombre Producto",
+    "type": "text",
+    "maxlength": 35,
+    "required": true,
+    "value": ""
+  }, {
+    "name": "Tipo Producto",
+    "type": "select",
+    "required": true,
+    "value": ""
+  }, {
+    "name": "Marca",
+    "type": "select",
+    "required": true,
+    "value": ""
+  }, {
+    "name": "Modelo",
+    "type": "select",
+    "required": true,
+    "value": ""
+  }, {
+    "name": "Descripción",
+    "type": "textarea",
+    "maxlength": 100,
+    "required": false,
+    "value": ""
+  }, {
+    "name": "Fecha",
+    "type": "date",
+    "required": true,
+    "value": ""
+  }
+
+  ],"datos_almacen": [{
+    "name": "Color",
+    "type": "select",
+    "required": true,
+    "value": ""
+  }, {
+    "name": "Size",
+    "type": "select",
+    "required": true,
+    "value": ""
+  }, {
+    "name": "precio",
+    "type": "number",
+    "maxlength": 10,
+    "required": true,
+    "value": ""
+  }, {
+    "name": "cantidad",
+    "type": "number",
+    "maxlength": 10,
+    "required": true,
+    "value": ""
+  }
+
+  ],"fotos": [{
+    "name": "Nombre foto",
+    "type": "text",
+    "maxlength": 30,
+    "required": true,
+    "value": ""
+  }, {
+
+    "foto": [],
+    "size": "",
+    "type": ""
+  }]
+}
