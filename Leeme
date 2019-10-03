@@ -5,11 +5,10 @@
 
 
   1) datos_basicos 
-    a)  validar los campos dependiendo del tipo, y los required como obligatorios y su maxlength,  cargar los campos select
+    a)  validar los campos dependiendo del tipo, y los required como obligatorios y su maxlength, cargar los campos select
     con sus respectivas data en json.
     
-    b)  al momento de seleccionar el "tipo de producto" se carga la "marca" y el "modelo" dependiendo del tipo q se selecciono , si el "tipo de producto"
-    no posee "marca" o "medelo" no sera obligatorio, de lo contrario si lo es.
+    b)  al momento de seleccionar el "tipo de producto" se carga la "marca" y el "modelo" dependiendo del tipo q se selecciono , si el "tipo de producto" no posee "marca" o "medelo" no sera obligatorio, de lo contrario si lo es.
 
     c) usar los select de bootstrap que poseen buscador 
 
