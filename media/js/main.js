@@ -23,7 +23,11 @@ fetch('datos.json')
 					break;
 				case "select":
 					let select = document.createElement("select")
+					let option = document.createElement("option")
+					option.selected = true;
+					option.innerHTML = "Seleccione un item"
 					select.setAttribute("id", `${e.name}`)
+					select.appendChild(option)
 					form.appendChild(select)
 					form.appendChild(br2)
 					break;
@@ -41,28 +45,59 @@ fetch('datos.json')
 		}
 	})
 
+let product_type = [];
+let product_brand = [];
+let product_model = [];
+
 fetch('tipo_producto.json')
 	.then(resp => resp.json())
 	.then(data => {
-		console.log(data);
-		let option = document.createElement("option")
 		for (const key in data) {
 			if (data.hasOwnProperty(key)) {
-				console.log(data.hasOwnProperty(key));
-				const element = data[key];
-				console.log(element[0].name);
+				for (const i of data[key]) {
+					product_type.push(i)
+					let type_product_select = document.getElementById("Tipo Producto")
+					let option = document.createElement("option")
+					option.id = i.id
+					option.innerHTML = i.name
+					type_product_select.appendChild(option)
+				}
 			}
 		}
-		// for (const e of data.tipo_producto) {
-		// 	console.log(e.id);
-		// }
-		
 	})
 
-// fetch('modelo.json')
-// 	.then(resp => resp.json())
-// 	.then(data => console.log(data))
+fetch('modelo.json')
+	.then(resp => resp.json())
+	.then(data => {
+		for (const key in data) {
+			console.log(data);
+			if (data.hasOwnProperty(key)) {
+				for (const i of data[key]) {
+					product_brand.push(i)
+					let brand = document.getElementById("Marca")
+					let option = document.createElement("option")
+					option.id = i.id_tipo
+					option.innerHTML = i.name;
+					brand.appendChild(option)			
+				}
+			}
+		}
+	})
 
-// fetch('marca.json')
-// 	.then(resp => resp.json())
-// 	.then(data => console.log(data))
+fetch('marca.json')
+	.then(resp => resp.json())
+	.then(data => {
+		for (const key in data) {
+			if (data.hasOwnProperty(key)) {
+				for (const i of data[key]) {
+					product_model.push(i)
+					let model = document.getElementById("Modelo")
+					let option = document.createElement("option")
+					option.id = i.id_tipo
+					option.innerHTML = i.name;
+					model.appendChild(option)	
+				}
+			}
+		}
+	})
+
