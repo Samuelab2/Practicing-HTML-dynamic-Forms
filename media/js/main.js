@@ -88,7 +88,6 @@ const basicForm = arr => {
 	input.classList.add("btn", "btn-primary")
 	form.appendChild(input)
 	$('.selectpicker').selectpicker('refresh');
-
 }
 
 const selectTypeProducts = arr => {
@@ -138,6 +137,7 @@ function model() {
 						$('.selectpicker').selectpicker('refresh');
 					}
 				}
+				fieldValidating()	
 			}
 		})
 }
@@ -153,12 +153,27 @@ function clear() {
 			ModelSelector.remove(x)
 		}
 	}
+
 	brand()
 	model()
 }
 
-// form validation bootstrap
+function fieldValidating() {
+	if (typeSelector != 0 && ModelSelector.length <= 1) {
+		ModelSelector.removeAttribute("required")
+	} else {
+		ModelSelector.setAttribute("required", "true")
+	}
+	if (typeSelector != 0 && brandSelector.length <= 1) {
+		brandSelector.removeAttribute("required")
+	} else {
+		brandSelector.setAttribute("required", "true")
 
+	}
+	
+}
+
+// form validation bootstrap
 (function() {
   'use strict';
   window.addEventListener('load', function() {
@@ -176,3 +191,4 @@ function clear() {
     });
   }, false);
 })();
+
