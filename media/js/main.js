@@ -1,4 +1,5 @@
-// const form = document.getElementById("form")
+const form = document.getElementById("form")
+const buttonContainer = document.getElementById("buttonContainer")
 
 let typeSelector;
 let brandSelector;
@@ -10,35 +11,38 @@ let data = [
 ]
 
 let request = data.map(file => fetch(file))
+let formInfo = []
 
 Promise.all(request)
 .then(responses => responses)
 .then(responses => Promise.all(responses.map(r => r.json())))
 .then(users => {
 	
-	let datos_basicos = users[0].datos_basicos
-	let datos_almacen = users[0].datos_almacen
-	let fotos = users[0].fotos
+	formInfo.push(users)
 
 	let tipo_producto = users[1]
 	
-	basicForm(datos_basicos)
-	basicForm(datos_almacen)
-	basicForm(fotos)
-
+	basicForm(users[0].datos_basicos)
+	basicForm(users[0].datos_almacen)
+	basicForm(users[0].fotos)
 	selectTypeProducts(tipo_producto)
 	
 	brandSelector = document.getElementById("Marca")
 	ModelSelector = document.getElementById("Modelo")
+
+	showTab(currentTab)
 })
 
 const basicForm = arr => {
 	
-	let formContainer = document.getElementById("formsContainer")
-	let form = document.createElement("form")
-	form.setAttribute('novalidate', true)
-	form.classList.add("needs-validation")
-	formContainer.appendChild(form)
+	// let formContainer = document.getElementById("formsContainer")
+	let div = document.createElement("div")
+	div.classList.add("tab")
+	// let form = document.createElement("form")
+	// // form.setAttribute('novalidate', true)
+	// form.classList.add("needs-validation")
+	// div.appendChild(form)
+	form.insertBefore(div, buttonContainer)
 
 	for (let e of arr) {
 		
@@ -49,8 +53,8 @@ const basicForm = arr => {
 
 		label.innerHTML = `${e.name}`
 
-		form.appendChild(label)
-		form.appendChild(br)
+		div.appendChild(label)
+		div.appendChild(br)
 
 		switch (e.type) {
 			case "text":
@@ -58,8 +62,8 @@ const basicForm = arr => {
 				input.setAttribute("maxLength", `${e.maxlength}`)
 				input.setAttribute("required", `${e.required}`)
 				input.classList.add("form-control")
-				form.appendChild(input)
-				form.appendChild(br2)
+				div.appendChild(input)
+				div.appendChild(br2)
 				break;
 			case "select":
 				let select = document.createElement("select")
@@ -71,38 +75,37 @@ const basicForm = arr => {
 				select.setAttribute("data-live-search", "true")
 				select.classList.add("selectpicker")
 				select.appendChild(option)
-				form.appendChild(select)
-				form.appendChild(br2)
+				div.appendChild(select)
+				div.appendChild(br2)
 				break;
 			case "textarea":
 				let textarea = document.createElement("textarea")
 				textarea.setAttribute("maxLength", `${e.maxlength}`)
 				textarea.classList.add("form-control")
-				form.appendChild(textarea)
-				form.appendChild(br2)
+				div.appendChild(textarea)
+				div.appendChild(br2)
 				break;
 			case "date":
 				input.setAttribute("type", `${e.type}`)
 				input.setAttribute("required", `${e.required}`)
 				input.classList.add("form-control")
-				form.appendChild(input)
-				form.appendChild(br2)
+				div.appendChild(input)
+				div.appendChild(br2)
 				break;
 			case "number":
 				input.setAttribute("type", `${e.type}`)
 				input.setAttribute("maxLength", `${e.maxlength}`)
 				input.setAttribute("required", `${e.required}`)
 				input.classList.add("form-control")
-				form.appendChild(input)
-				form.appendChild(br2)
+				div.appendChild(input)
+				div.appendChild(br2)
 		}
 	}
-
-	let input = document.createElement("input")
-	input.setAttribute("type", "submit")
-	input.classList.add("btn", "btn-primary")
-	form.appendChild(input)
-	form.appendChild(document.createElement("br"))
+	// let input = document.createElement("input")
+	// input.setAttribute("type", "submit")
+	// input.classList.add("btn", "btn-primary")
+	// form.appendChild(input)
+	// form.appendChild(document.createElement("br"))
 	$('.selectpicker').selectpicker('refresh');
 }
 
@@ -186,22 +189,96 @@ function fieldValidating() {
 	}
 }
 
-// form validation bootstrap
 (function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-})();
+	'use strict';
+	window.addEventListener('load', function() {
+	  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+	  var forms = document.getElementsByClassName('needs-validation');
+	  // Loop over them and prevent submission
+	  var validation = Array.prototype.filter.call(forms, function(form) {
+		form.addEventListener('submit', function(event) {
+		  if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+		  }
+		  form.classList.add('was-validated');
+		}, false);
+	  });
+	}, false);
+  })();
 
+  let currentTab = 0
+
+function showTab(n) {
+	// This function will display the specified tab of the form ...
+	let x = document.getElementsByClassName("tab");
+	x[n].style.display = "block";
+	// ... and fix the Previous/Next buttons:
+	if (n == 0) {
+	  document.getElementById("prevBtn").style.display = "none";
+	} else {
+	  document.getElementById("prevBtn").style.display = "inline";
+	}
+	if (n == (x.length - 1)) {
+	  document.getElementById("nextBtn").innerHTML = "Submit";
+	} else {
+	  document.getElementById("nextBtn").innerHTML = "Next";
+	}
+	// ... and run a function that displays the correct step indicator:
+	fixStepIndicator(n)
+}
+
+function nextPrev(n) {
+	// This function will figure out which tab to display
+	let x = document.getElementsByClassName("tab");
+	// Exit the function if any field in the current tab is invalid:
+	// if (n == 1 && !validateForm()) return false;
+	// Hide the current tab:
+	x[currentTab].style.display = "none";
+	// Increase or decrease the current tab by 1:
+	currentTab = currentTab + n;
+	// if you have reached the end of the form... :
+	if (currentTab >= x.length) {
+		//...the form gets submitted:
+		document.getElementById("regForm").submit();
+		return false;
+	}
+	// Otherwise, display the correct tab:
+	showTab(currentTab);
+}
+
+// Validate the form, I have to study this:
+
+// function validateForm() {
+// 	// This function deals with validation of the form fields
+// 	var x, y, i, valid = true;
+// 	x = document.getElementsByClassName("tab");
+// 	y = x[currentTab].getElementsByTagName("input");
+// 	// A loop that checks every input field in the current tab:
+// 	for (i = 0; i < y.length; i++) {
+// 	  // If a field is empty...
+// 	  if (y[i].value == "") {
+// 		// add an "invalid" class to the field:
+// 		y[i].className += " invalid";
+// 		// and set the current valid status to false:
+// 		valid = false;
+// 	  }
+// 	}
+// 	// If the valid status is true, mark the step as finished and valid:
+// 	if (valid) {
+// 	  document.getElementsByClassName("step")[currentTab].className += " finish";
+// 	}
+// 	return valid; // return the valid status
+//   }
+
+
+// Validate this, it is like a breadcrumb
+function fixStepIndicator(n) {
+	// This function removes the "active" class of all steps...
+	var i, x = document.getElementsByClassName("step");
+	for (i = 0; i < x.length; i++) {
+	  x[i].className = x[i].className.replace(" active", "");
+	}
+	//... and adds the "active" class to the current step:
+	x[n].className += " active";
+  }
