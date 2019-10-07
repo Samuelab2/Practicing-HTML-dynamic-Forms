@@ -1,4 +1,4 @@
-const form = document.getElementById("form")
+// const form = document.getElementById("form")
 
 let typeSelector;
 let brandSelector;
@@ -12,17 +12,20 @@ let data = [
 let request = data.map(file => fetch(file))
 
 Promise.all(request)
-// all responses are resolved successfully
 .then(responses => responses)
-// map array of responses into array of response.json() to read their content
-// here we use promise.all again to get the response of every data
 .then(responses => Promise.all(responses.map(r => r.json())))
 .then(users => {
 	
 	let datos_basicos = users[0].datos_basicos
+	let datos_almacen = users[0].datos_almacen
+	let fotos = users[0].fotos
+
 	let tipo_producto = users[1]
 	
 	basicForm(datos_basicos)
+	basicForm(datos_almacen)
+	basicForm(fotos)
+
 	selectTypeProducts(tipo_producto)
 	
 	brandSelector = document.getElementById("Marca")
@@ -31,6 +34,12 @@ Promise.all(request)
 
 const basicForm = arr => {
 	
+	let formContainer = document.getElementById("formsContainer")
+	let form = document.createElement("form")
+	form.setAttribute('novalidate', true)
+	form.classList.add("needs-validation")
+	formContainer.appendChild(form)
+
 	for (let e of arr) {
 		
 		let label = document.createElement("label")
@@ -60,8 +69,6 @@ const basicForm = arr => {
 				option.value = "";
 				select.setAttribute("id", `${e.name}`)
 				select.setAttribute("data-live-search", "true")
-				select.setAttribute("data-width", "fit")
-				select.setAttribute("tabindex", "-98")
 				select.classList.add("selectpicker")
 				select.appendChild(option)
 				form.appendChild(select)
@@ -81,12 +88,21 @@ const basicForm = arr => {
 				form.appendChild(input)
 				form.appendChild(br2)
 				break;
+			case "number":
+				input.setAttribute("type", `${e.type}`)
+				input.setAttribute("maxLength", `${e.maxlength}`)
+				input.setAttribute("required", `${e.required}`)
+				input.classList.add("form-control")
+				form.appendChild(input)
+				form.appendChild(br2)
 		}
 	}
+
 	let input = document.createElement("input")
 	input.setAttribute("type", "submit")
 	input.classList.add("btn", "btn-primary")
 	form.appendChild(input)
+	form.appendChild(document.createElement("br"))
 	$('.selectpicker').selectpicker('refresh');
 }
 
@@ -153,7 +169,6 @@ function clear() {
 			ModelSelector.remove(x)
 		}
 	}
-
 	brand()
 	model()
 }
@@ -168,9 +183,7 @@ function fieldValidating() {
 		brandSelector.removeAttribute("required")
 	} else {
 		brandSelector.setAttribute("required", "true")
-
 	}
-	
 }
 
 // form validation bootstrap
