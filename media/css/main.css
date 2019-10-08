@@ -2,25 +2,26 @@ body {
   margin: 10px;
 }
 
+.invalid {
+  /* background-color: #ffdddd; */
+  border: 1px solid red;
+}
+
 /* input:invalid {
   border: 2px solid red;
   outline: transparent;
-}
+} */
 
-input:valid {
-  border: 2px solid blue;
+.valid {
+  border: 1px solid rgb(0, 123, 255);
   outline: transparent;
 }
 
-select:valid {
+/* select:valid {
   border: 2px solid blue;
-  outline: transparent;
-}
-
-select:invalid {
-  border: 2px solid red;
   outline: transparent;
 } */
+
 
 /* Hide all steps by default: */
 .tab {
@@ -47,4 +48,15 @@ select:invalid {
 /* Mark the steps that are finished and valid: */
 .step.finish {
   background-color: #4CAF50;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #4CAF50;
+}
+
+.step__container {
+  text-align: center;
+  margin-top: 40px;
+  overflow: auto;
 }

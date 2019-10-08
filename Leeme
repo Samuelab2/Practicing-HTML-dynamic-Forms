@@ -25,7 +25,6 @@
   3) datos_foto
     agregar una imagen al producto , al momento de subir la imagen se tiene q ver una miniatura de la misma 
 
-
 #2 al completar el formulario 
   a) almacenar todo la data en json , bien estrucurado 
   b) que se "reinicie" el formulario de tal manera q puedas agregar otro registro , como agregaste el primero

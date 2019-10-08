@@ -11,15 +11,13 @@
 <body>
 
 	<div id="formsContainer" class="form__container">
-		<form class="needs-validation" id="form" action="" novalidate>
+		<form class="needs-validation" id="form" action="">
 	
 			<div id="buttonContainer" class="form__container">
-				<input type="submit" value="Enviar">
-				<button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-				<button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+				<button type="button" id="prevBtn" onclick="nextPrev(-1)" class="btn btn-primary">Anterior</button>
+				<button type="button" id="nextBtn" onclick="nextPrev(1)" class="btn btn-primary">Siguiente</button>
 			</div>
-			<div style="text-align:center;margin-top:40px;">
-				<span class="step"></span>
+			<div class="step__container">
 				<span class="step"></span>
 				<span class="step"></span>
 				<span class="step"></span>
