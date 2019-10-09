@@ -1,0 +1,39 @@
+{
+  "color": [{
+    "id": "1",
+    "id_tipo": "1",
+    "name": "Rojo"
+  }, {
+    "id": "2",
+    "id_tipo": "1",
+    "name": "Azul"
+  }, {
+    "id": "3",
+    "id_tipo": "1",
+    "name": "Negro"
+  }, {
+    "id": "4",
+    "id_tipo": "1",
+    "name": "Blanco"
+  }, {
+    "id": "5",
+    "id_tipo": "1",
+    "name": "Verde oscuro"
+  }, {
+    "id": "6",
+    "id_tipo": "2",
+    "name": "Negro"
+  }, {
+    "id": "7",
+    "id_tipo": "2",
+    "name": "Azul"
+  }, {
+    "id": "8",
+    "id_tipo": "2",
+    "name": "Blanco"
+  }, {
+    "id": "9",
+    "id_tipo": "2",
+    "name": "Dorado"
+  }]
+}

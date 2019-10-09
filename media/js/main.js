@@ -1,9 +1,11 @@
 const form = document.getElementById("form")
-const buttonContainer = document.getElementById("buttonContainer")
+const stepContainer = document.getElementById("stepContainer")
 
 let typeSelector;
 let brandSelector;
-let ModelSelector;
+let modelSelector;
+let colorSelector;
+let sizeelector;
 
 let data = [
 	'datos.json',
@@ -11,14 +13,11 @@ let data = [
 ]
 
 let request = data.map(file => fetch(file))
-let formInfo = []
 
 Promise.all(request)
 	.then(responses => responses)
 	.then(responses => Promise.all(responses.map(r => r.json())))
 	.then(users => {
-
-		formInfo.push(users)
 
 		let tipo_producto = users[1]
 
@@ -28,21 +27,18 @@ Promise.all(request)
 		selectTypeProducts(tipo_producto)
 
 		brandSelector = document.getElementById("Marca")
-		ModelSelector = document.getElementById("Modelo")
+		modelSelector = document.getElementById("Modelo")
+		colorSelector = document.getElementById("Color")
+		sizeSelector = document.getElementById("Size")
 
 		showTab(currentTab)
 	})
 
 const basicForm = arr => {
 
-	// let formContainer = document.getElementById("formsContainer")
 	let div = document.createElement("div")
 	div.classList.add("tab")
-	// let form = document.createElement("form")
-	// // form.setAttribute('novalidate', true)
-	// form.classList.add("needs-validation")
-	// div.appendChild(form)
-	form.insertBefore(div, buttonContainer)
+	form.insertBefore(div, stepContainer)
 
 	for (let e of arr) {
 
@@ -61,9 +57,8 @@ const basicForm = arr => {
 				input.setAttribute("type", `${e.type}`)
 				input.setAttribute("maxLength", `${e.maxlength}`)
 				if (e.required == true) {
-					input.classList.add("required")
+					input.classList.add("validate")
 				}
-				// input.addEventListener("input", validateForm)
 				input.classList.add("form-control")
 				div.appendChild(input)
 				div.appendChild(br2)
@@ -72,15 +67,22 @@ const basicForm = arr => {
 				let select = document.createElement("select")
 				let option = document.createElement("option")
 				if (e.required == true) {
-					select.classList.add("required")
+					select.classList.add("validate")
 				}
-				// select.setAttribute("required", `${e.required}`)
+				select.setAttribute("id", `${e.name}`)
+				select.appendChild(option)
+				select.classList.add("selectpicker")
+				$(function () {
+					$('.selectpicker').selectpicker({
+						style: '',
+						liveSearch: true,
+						liveSearchPlaceholder: 'Buscar...',
+						styleBase: 'form-control',
+						width: '100%'
+					});
+				});
 				option.innerHTML = "Seleccione un item"
 				option.value = "";
-				select.setAttribute("id", `${e.name}`)
-				select.setAttribute("data-live-search", "true")
-				select.classList.add("selectpicker")
-				select.appendChild(option)
 				div.appendChild(select)
 				div.appendChild(br2)
 				break;
@@ -94,9 +96,8 @@ const basicForm = arr => {
 			case "date":
 				input.setAttribute("type", `${e.type}`)
 				if (e.required == true) {
-					input.classList.add("required")
+					input.classList.add("validate")
 				}
-				// input.setAttribute("required", `${e.required}`)
 				input.classList.add("form-control")
 				div.appendChild(input)
 				div.appendChild(br2)
@@ -105,21 +106,14 @@ const basicForm = arr => {
 				input.setAttribute("type", `${e.type}`)
 				input.setAttribute("maxLength", `${e.maxlength}`)
 				if (e.required == true) {
-					input.classList.add("required")
+					input.classList.add("validate")
 				}
-				// input.setAttribute("required", `${e.required}`)
 				input.classList.add("form-control")
 				div.appendChild(input)
 				div.appendChild(br2)
+			}
 		}
 	}
-	// let input = document.createElement("input")
-	// input.setAttribute("type", "submit")
-	// input.classList.add("btn", "btn-primary")
-	// form.appendChild(input)
-	// form.appendChild(document.createElement("br"))
-	$('.selectpicker').selectpicker('refresh');
-}
 
 const selectTypeProducts = arr => {
 	for (const key in arr) {
@@ -132,6 +126,33 @@ const selectTypeProducts = arr => {
 			typeSelector.add(option)
 		}
 	}
+}
+
+function clear() {
+	if (brandSelector.length > 1) {
+		for (let x = brandSelector.length; x >= 1; x--) {
+			brandSelector.remove(x)
+		}
+	}
+	if (modelSelector.length > 1) {
+		for (let x = modelSelector.length; x >= 1; x--) {
+			modelSelector.remove(x)
+		}
+	}
+	if (colorSelector.length > 1) {
+		for (let x = colorSelector.length; x >= 1; x--) {
+			colorSelector.remove(x)
+		}
+	}
+	if (sizeSelector.length > 1) {
+		for (let x = sizeSelector.length; x >= 1; x--) {
+			sizeSelector.remove(x)
+		}
+	}
+	brand()
+	model()
+	color()
+	size()
 }
 
 function brand() {
@@ -173,60 +194,86 @@ function model() {
 		})
 }
 
-function clear() {
-	if (brandSelector.length > 1) {
-		for (let x = brandSelector.length; x >= 1; x--) {
-			brandSelector.remove(x)
-		}
-	}
-	if (ModelSelector.length > 1) {
-		for (let x = ModelSelector.length; x >= 1; x--) {
-			ModelSelector.remove(x)
-		}
-	}
-	brand()
-	model()
+function color() {
+	fetch('color.json')
+		.then(response => response.json())
+		.then(data => {
+			for (const key in data) {
+				for (const i of data[key]) {
+					let color = document.getElementById("Color")
+					let option = document.createElement("option")
+					if (i.id_tipo == typeSelector.value) {
+						option.value = i.id_tipo
+						option.text = i.name;
+						color.add(option)
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+				fieldValidating()
+			}
+		})
+}
+
+function size() {
+	fetch('size.json')
+		.then(response => response.json())
+		.then(data => {
+			for (const key in data) {
+				for (const i of data[key]) {
+					let size = document.getElementById("Size")
+					let option = document.createElement("option")
+					if (i.id_tipo == typeSelector.value) {
+						option.value = i.id_tipo
+						option.text = i.name;
+						size.add(option)
+						$('.selectpicker').selectpicker('refresh');
+					}
+				}
+				fieldValidating()
+			}
+		})
 }
 
 function fieldValidating() {
-	if (typeSelector != 0 && ModelSelector.length <= 1) {
-		ModelSelector.classList.remove("required")
+	if (typeSelector != 0 && modelSelector.length <= 1) {
+		modelSelector.classList.remove("required")
 	} else {
-		ModelSelector.classList.add("required")
+		modelSelector.classList.add("required")
 	}
 	if (typeSelector != 0 && brandSelector.length <= 1) {
 		brandSelector.classList.remove("required")
 	} else {
 		brandSelector.classList.add("required")
 	}
+	if (typeSelector != 0 && colorSelector.length <= 1) {
+		colorSelector.classList.remove("required")
+	} else {
+		colorSelector.classList.add("required")
+	}
+	if (typeSelector != 0 && sizeSelector.length <= 1) {
+		sizeSelector.classList.remove("required")
+	} else {
+		sizeSelector.classList.add("required")
+	}
 }
 
 let currentTab = 0
 
 function nextPrev(n) {
-	// This function will figure out which tab to display
 	let x = document.getElementsByClassName("tab");
-	// Exit the function if any field in the current tab is invalid:
 	if (n == 1 && !validateForm()) return false;
-	// Hide the current tab:
 	x[currentTab].style.display = "none";
-	// Increase or decrease the current tab by 1:
 	currentTab += n;
-	// if you have reached the end of the form... :
 	if (currentTab >= x.length) {
-		//...the form gets submitted:
 		form.submit();
 		return false;
 	}
-	// Otherwise, display the correct tab:
 	showTab(currentTab);
 }
 
 function showTab(n) {
-	// This function will display the specified tab of the form ...
 	let x = document.getElementsByClassName("tab");
 	x[n].style.display = "block";
-	// ... and fix the Previous/Next buttons:
 	if (n == 0) {
 		document.getElementById("prevBtn").style.display = "none";
 	} else {
@@ -237,50 +284,63 @@ function showTab(n) {
 	} else {
 		document.getElementById("nextBtn").innerHTML = "Siguiente";
 	}
-	// ... and run a function that displays the correct step indicator:
-	fixStepIndicator(n)
+	switch (n) {
+		case 0:
+			let y = document.getElementById("formTitle")
+			y.innerText = "Datos Basicos"
+			break;
+		case 1:
+			let z = document.getElementById("formTitle")
+			z.innerText = "Datos Almacen"
+			break;
+		case 2:
+			let u = document.getElementById("formTitle")
+			u.innerText = "Fotografia"
+			break;
+	}
+	StepIndicator(n)
 }
 
-// Validate this, it is like a breadcrumb
-function fixStepIndicator(n) {
-	// This function removes the "active" class of all steps...
+function StepIndicator(n) {
 	let x = document.getElementsByClassName("step");
 	for (i = 0; i < x.length; i++) {
 		x[i].className = x[i].className.replace(" active", "");
 	}
-	//... and adds the "active" class to the current step:
-	x[n].className += " active";
+	x[n].classList.add("active")
 }
-
-	// Validate the form, I have to study this:
 
 function validateForm() {
-	// This function deals with validation of the form fields
 	let valid = true;
 	let x = document.getElementsByClassName("tab");
-	let y = x[currentTab].querySelectorAll(".required");
-
-	// A loop that checks every input field in the current tab:
+	let y = x[currentTab].querySelectorAll(".validate");
+	console.log(y);
+	
 	for (i = 0; i < y.length; i++) {
-		// If a field is empty...
 		if (y[i].value == "") {
-			// create a conditional to validate the bootstrap select
 			if (y[i].classList.contains("selectpicker")) {
-				$('.selectpicker').selectpicker('setStyle', 'btn-danger');
+					$(y[i]).selectpicker('setStyle', 'btn-danger')
 			} else {
-				// add an "invalid" class to the field:
 				y[i].classList.add("invalid")
+				valid = false;
 			}
-			// and set the current valid status to false:
-			valid = false;
-		} else {
-			y[i].classList.add("valid")
-
 		}
 	}
-	// If the valid status is true, mark the step as finished and valid:
 	if (valid) {
-		document.getElementsByClassName("step")[currentTab].className += " finish";
+		document.getElementsByClassName("step")[currentTab].classList.add("finish")
 	}
-	return valid; // return the valid status
+	return valid;
 }
+
+// function validateFormGood() {
+// 	let x = document.getElementsByClassName("tab");
+// 	let y = x[currentTab].querySelectorAll(".validate");
+// 	for (i = 0; i < y.length; i++) {
+// 		if (y[i].value != "") {
+// 			y[i].classList.replace("invalid", "valid")
+// 			$(function() {
+// 				$('.selectpicker').selectpicker('setStyle', 'btn-info')
+// 				$('.selectpicker').selectpicker('refresh');
+// 			});
+// 		}
+// 	}
+// }

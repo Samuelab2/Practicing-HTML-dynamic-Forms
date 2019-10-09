@@ -2,33 +2,34 @@ body {
   margin: 10px;
 }
 
-.invalid {
-  /* background-color: #ffdddd; */
-  border: 1px solid red;
+.form__container {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
 }
 
-/* input:invalid {
-  border: 2px solid red;
-  outline: transparent;
-} */
+.form {
+  width: 50%;
+}
+
+.form-control {
+  border: 1px solid lightgrey;
+  transition: border 2s;
+}
+
+.form-control.invalid {
+  border: 1px solid red;
+}
 
 .valid {
   border: 1px solid rgb(0, 123, 255);
   outline: transparent;
 }
 
-/* select:valid {
-  border: 2px solid blue;
-  outline: transparent;
-} */
-
-
-/* Hide all steps by default: */
 .tab {
   display: none;
 }
 
-/* Make circles that indicate the steps of the form: */
 .step {
   height: 15px;
   width: 15px;
@@ -40,23 +41,21 @@ body {
   opacity: 0.5;
 }
 
-/* Mark the active step: */
 .step.active {
   opacity: 1;
 }
 
-/* Mark the steps that are finished and valid: */
 .step.finish {
-  background-color: #4CAF50;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #4CAF50;
+  background-color: rgb(0, 123, 255);
 }
 
 .step__container {
   text-align: center;
-  margin-top: 40px;
+  margin-bottom: 15px;
   overflow: auto;
+}
+
+.form__container--button {
+  display: flex;
+  justify-content: space-evenly;
 }
