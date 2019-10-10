@@ -18,7 +18,8 @@ Promise.all(request)
 	.then(responses => responses)
 	.then(responses => Promise.all(responses.map(r => r.json())))
 	.then(users => {
-
+		// console.log(users[0].fotos[0]);
+		
 		let tipo_producto = users[1]
 
 		basicForm(users[0].datos_basicos)
@@ -41,79 +42,104 @@ const basicForm = arr => {
 	form.insertBefore(div, stepContainer)
 
 	for (let e of arr) {
+		if (e.hasOwnProperty("name")) {
+			let label = document.createElement("label")
+			let br = document.createElement("br")
+			let br2 = document.createElement("br")
+			let input = document.createElement("input")
 
-		let label = document.createElement("label")
-		let br = document.createElement("br")
-		let br2 = document.createElement("br")
-		let input = document.createElement("input")
+			label.innerHTML = `${e.name}`
 
-		label.innerHTML = `${e.name}`
+			div.appendChild(label)
+			div.appendChild(br)
 
-		div.appendChild(label)
-		div.appendChild(br)
-
-		switch (e.type) {
-			case "text":
-				input.setAttribute("type", `${e.type}`)
-				input.setAttribute("maxLength", `${e.maxlength}`)
-				if (e.required == true) {
-					input.classList.add("validate")
-				}
-				input.classList.add("form-control")
-				div.appendChild(input)
-				div.appendChild(br2)
-				break;
-			case "select":
-				let select = document.createElement("select")
-				let option = document.createElement("option")
-				if (e.required == true) {
-					select.classList.add("validate")
-				}
-				select.setAttribute("id", `${e.name}`)
-				select.appendChild(option)
-				select.classList.add("selectpicker")
-				$(function () {
-					$('.selectpicker').selectpicker({
-						style: '',
-						liveSearch: true,
-						liveSearchPlaceholder: 'Buscar...',
-						styleBase: 'form-control',
-						width: '100%'
+			switch (e.type) {
+				case "text":
+					input.setAttribute("type", `${e.type}`)
+					input.setAttribute("maxLength", `${e.maxlength}`)
+					input.setAttribute("name", `${e.name}`)
+					if (e.required == true) {
+						input.classList.add("validate")
+					}
+					input.classList.add("form-control")
+					div.appendChild(input)
+					div.appendChild(br2)
+					break;
+				case "select":
+					let select = document.createElement("select")
+					let option = document.createElement("option")
+					if (e.required == true) {
+						select.classList.add("validate")
+					}
+					select.setAttribute("id", `${e.name}`)
+					select.setAttribute("name", `${e.name}`)
+					select.appendChild(option)
+					select.classList.add("selectpicker")
+					$(function () {
+						$('.selectpicker').selectpicker({
+							style: '',
+							liveSearch: true,
+							liveSearchPlaceholder: 'Buscar...',
+							styleBase: 'form-control',
+							width: '100%'
+						});
 					});
-				});
-				option.innerHTML = "Seleccione un item"
-				option.value = "";
-				div.appendChild(select)
-				div.appendChild(br2)
-				break;
-			case "textarea":
-				let textarea = document.createElement("textarea")
-				textarea.setAttribute("maxLength", `${e.maxlength}`)
-				textarea.classList.add("form-control")
-				div.appendChild(textarea)
-				div.appendChild(br2)
-				break;
-			case "date":
-				input.setAttribute("type", `${e.type}`)
-				if (e.required == true) {
-					input.classList.add("validate")
-				}
-				input.classList.add("form-control")
-				div.appendChild(input)
-				div.appendChild(br2)
-				break;
-			case "number":
-				input.setAttribute("type", `${e.type}`)
-				input.setAttribute("maxLength", `${e.maxlength}`)
-				if (e.required == true) {
-					input.classList.add("validate")
-				}
-				input.classList.add("form-control")
-				div.appendChild(input)
-				div.appendChild(br2)
+					option.innerHTML = "Seleccione un item"
+					option.value = "";
+					div.appendChild(select)
+					div.appendChild(br2)
+					break;
+				case "textarea":
+					let textarea = document.createElement("textarea")
+					textarea.setAttribute("maxLength", `${e.maxlength}`)
+					textarea.setAttribute("name", `${e.name}`)
+					textarea.classList.add("form-control")
+					div.appendChild(textarea)
+					div.appendChild(br2)
+					break;
+				case "date":
+					input.setAttribute("type", `${e.type}`)
+					input.setAttribute("name", `${e.name}`)
+					if (e.required == true) {
+						input.classList.add("validate")
+					}
+					input.classList.add("form-control")
+					div.appendChild(input)
+					div.appendChild(br2)
+					break;
+				case "number":
+					input.setAttribute("type", `${e.type}`)
+					input.setAttribute("maxLength", `${e.maxlength}`)
+					input.setAttribute("name", `${e.name}`)
+					if (e.required == true) {
+						input.classList.add("validate")
+					}
+					input.classList.add("form-control")
+					div.appendChild(input)
+					div.appendChild(br2)
+					break;
+				case "file":
+					let imageContainer = document.createElement("div")
+					imageContainer.classList.add("imageContainer")
+					let preview = document.createElement("img")
+					preview.setAttribute("id", "image")
+
+					input.setAttribute("type", `${e.type}`)
+					input.setAttribute("maxLength", `${e.maxlength}`)
+					input.setAttribute("name", `${e.name}`)
+					if (e.required == true) {
+						input.classList.add("validate")
+					}
+					div.appendChild(input)
+					div.appendChild(br2)
+					div.appendChild(imageContainer)
+					imageContainer.appendChild(preview)
+					break;
 			}
 		}
 	}
+}
+		
 
 const selectTypeProducts = arr => {
 	for (const key in arr) {
@@ -265,11 +291,17 @@ function nextPrev(n) {
 	x[currentTab].style.display = "none";
 	currentTab += n;
 	if (currentTab >= x.length) {
+		form.addEventListener('submit', (event) => {
+			console.log("hola");
+			debugger
+			// event.preventDefault()
+		})
 		form.submit();
-		return false;
+		// return false;
 	}
 	showTab(currentTab);
 }
+
 
 function showTab(n) {
 	let x = document.getElementsByClassName("tab");

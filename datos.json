@@ -59,12 +59,11 @@
 
   ],"fotos": [{
     "name": "Nombre foto",
-    "type": "text",
+    "type": "file",
     "maxlength": 30,
     "required": true,
     "value": ""
   }, {
-
     "foto": [],
     "size": "",
     "type": ""
