@@ -59,3 +59,17 @@ body {
   display: flex;
   justify-content: space-evenly;
 }
+
+.submit {
+  justify-content: space-evenly;
+  display: none;
+}
+
+.imageContainer {
+  margin: 20px 0;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: auto;
+}

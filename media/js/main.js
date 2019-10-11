@@ -6,6 +6,10 @@ let brandSelector;
 let modelSelector;
 let colorSelector;
 let sizeelector;
+let buttonImage;
+let formData;
+let imageRender;
+
 
 let data = [
 	'datos.json',
@@ -26,11 +30,13 @@ Promise.all(request)
 		basicForm(users[0].datos_almacen)
 		basicForm(users[0].fotos)
 		selectTypeProducts(tipo_producto)
-
+		
 		brandSelector = document.getElementById("Marca")
 		modelSelector = document.getElementById("Modelo")
 		colorSelector = document.getElementById("Color")
 		sizeSelector = document.getElementById("Size")
+		buttonImage = document.getElementById("buttonImage")
+		imageRender = document.getElementById("image")
 
 		showTab(currentTab)
 	})
@@ -127,6 +133,7 @@ const basicForm = arr => {
 					input.setAttribute("type", `${e.type}`)
 					input.setAttribute("maxLength", `${e.maxlength}`)
 					input.setAttribute("name", `${e.name}`)
+					input.setAttribute("id", 'buttonImage')
 					if (e.required == true) {
 						input.classList.add("validate")
 					}
@@ -135,12 +142,12 @@ const basicForm = arr => {
 					div.appendChild(imageContainer)
 					imageContainer.appendChild(preview)
 					break;
+				}
 			}
 		}
 	}
-}
-		
-
+	
+	
 const selectTypeProducts = arr => {
 	for (const key in arr) {
 		for (const i of arr[key]) {
@@ -291,16 +298,18 @@ function nextPrev(n) {
 	x[currentTab].style.display = "none";
 	currentTab += n;
 	if (currentTab >= x.length) {
-		form.addEventListener('submit', (event) => {
-			console.log("hola");
-			debugger
-			// event.preventDefault()
-		})
-		form.submit();
+
+		// form.submit();
 		// return false;
 	}
 	showTab(currentTab);
 }
+
+form.addEventListener('submit', (event) => {
+	event.preventDefault()
+	console.log(formData);
+	
+})
 
 
 function showTab(n) {
@@ -312,9 +321,15 @@ function showTab(n) {
 		document.getElementById("prevBtn").style.display = "inline";
 	}
 	if (n == (x.length - 1)) {
-		document.getElementById("nextBtn").innerHTML = "Enviar";
+
+		document.getElementById("nextBtn").style.display = "none";
+		document.getElementById('submitButton').style.display = "flex";
+		// document.getElementById("nextBtn").innerHTML = "Enviar";
 	} else {
+		document.getElementById("nextBtn").style.display = "inline";
 		document.getElementById("nextBtn").innerHTML = "Siguiente";
+		document.getElementById('submitButton').style.display = "none";
+
 	}
 	switch (n) {
 		case 0:
@@ -345,8 +360,6 @@ function validateForm() {
 	let valid = true;
 	let x = document.getElementsByClassName("tab");
 	let y = x[currentTab].querySelectorAll(".validate");
-	console.log(y);
-	
 	for (i = 0; i < y.length; i++) {
 		if (y[i].value == "") {
 			if (y[i].classList.contains("selectpicker")) {
@@ -376,3 +389,17 @@ function validateForm() {
 // 		}
 // 	}
 // }
+
+function renderImage(formData) {
+	const file = formData.get('Nombre foto');
+	const image = URL.createObjectURL(file)
+	imageRender.setAttribute('src', image)
+}
+
+setTimeout(() => {
+	buttonImage.addEventListener('change', () => {
+		formData = new FormData(form)
+		renderImage(formData)
+	})
+}, 500)
+
